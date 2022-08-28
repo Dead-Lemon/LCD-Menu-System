@@ -1,8 +1,6 @@
-## A C based menu system for 16x2 style char LCD's
+## A, mostly, C based menu system for 16x2 style char LCD's
 Currently depends on LiquidCrystal_I2C
 Customizable for all screen sizes
-
-*Still need to seperate it into its own c library.*
 
 Menu items will be displayed in the same order as they are added.
 (You can play list groupings in any order)
