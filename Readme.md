@@ -32,27 +32,38 @@ struct MENU_ITEM test, test1, test2, test3, test4, test5, test6, test7;
 //initilize lcd
 menu_lcd_init(&lcd);
 //initilize menu
-init_menu(&system_menu, MENU_MAX_SIZE, 16 , 2);
-
-  init_menu(&system_menu, MENU_MAX_SIZE, 16 , 2);
+init_menu(&system_menu);
   //add menu( menu item, parent menu item, label, linked variable, variable type, menu system object, enable Edit )
-  //menu items must be added in sequetial groups.
+  //menu items must be added in sequetial groups. using the variable type E_RETURN functions as a back button, E_NULL does nothing,
   //root list
-  add_menu_item(&menu_overview, nullptr, "Overview", nullptr, E_RETURN, &system_menu, false);
-  add_menu_item(&menu_settings, nullptr, "Settings", nullptr, E_NULL, &system_menu, false);
-  add_menu_item(&menu_about, nullptr, "About", &about_txt, E_CHAR, &system_menu, true);
-  add_menu_item(&test, nullptr, "Float", &f1, E_FLOAT, &system_menu, false);
+  add_menu_item(&M_overview, nullptr, "Overview", nullptr, E_RETURN, &system_menu, false);
+  add_menu_item(&M_settings, nullptr, "Settings", nullptr, E_NULL, &system_menu, false);
+  add_menu_item(&M_about, nullptr, "About", &about_txt, E_CHAR, &system_menu, true);
+  add_menu_item(&M_test, nullptr, "Test Vars", nullptr, E_NULL, &system_menu, false);
   //sublist, links to menu_settings
-  add_menu_item(&back1, &menu_settings, "BACK", nullptr, E_RETURN, &system_menu, false);
-  add_menu_item(&test1, &menu_settings, "float11", &f1, E_FLOAT, &system_menu, true);
-  //sublist, links to test
-  add_menu_item(&back2, &test, "BACK", nullptr, E_RETURN, &system_menu, false);
-  add_menu_item(&test4, &test, "uint1", &ui16, E_UINT16, &system_menu, true);
-  add_menu_item(&test5, &test, "bloat menu", &ui16, E_UINT16, &system_menu, false);
-  //sublist, links to sublist test5
-  add_menu_item(&back3, &test5, "BACK", nullptr, E_RETURN, &system_menu, false);
-  add_menu_item(&more_depth, &test5, "deep1", &cool, E_BOOL, &system_menu, true);
-  add_menu_item(&more2, &test5, "deep2", &cool, E_BOOL, &system_menu, true);
+  add_menu_item(&M_back1, &M_settings, "BACK", nullptr, E_RETURN, &system_menu, false);
+  add_menu_item(&M_TempS1, &M_settings, "Temp 1", &TempS1_PV, E_FLOAT, &system_menu, false);
+  add_menu_item(&M_TempS2, &M_settings, "Temp 2", &TempS2_PV, E_FLOAT, &system_menu, false);
+  add_menu_item(&M_HumS1, &M_settings, "Humidity", &HumS1_PV, E_FLOAT, &system_menu, false);
+  add_menu_item(&M_FanC1, &M_settings, "Fan Auto", &fan_mode, E_BOOL, &system_menu, true);
+  add_menu_item(&M_FanC1_Rng, &M_settings, "Fan State", &fan_running, E_BOOL, &system_menu, false);
+
+  //sublist, links to temp sensor 1
+  add_menu_item(&M_back2, &M_TempS1, "BACK", nullptr, E_RETURN, &system_menu, false);
+  add_menu_item(&M_TempS1_max, &M_TempS1, "Max Temp", &TempS1_SP_max, E_FLOAT, &system_menu, true);
+  add_menu_item(&M_TempS1_min, &M_TempS1, "Min Temp", &TempS1_SP_min, E_FLOAT, &system_menu, true);
+
+  add_menu_item(&M_back3, &M_TempS2, "BACK", nullptr, E_RETURN, &system_menu, false);
+  add_menu_item(&M_TempS2_max, &M_TempS2, "Max Temp", &TempS2_SP_max, E_FLOAT, &system_menu, true);
+  add_menu_item(&M_TempS2_min, &M_TempS2, "Min Temp", &TempS2_SP_min, E_FLOAT, &system_menu, true);
+
+  //sublist, links to test values
+  add_menu_item(&M_back4, &M_test, "BACK", nullptr, E_RETURN, &system_menu, false);
+  add_menu_item(&M_Test_float, &M_test, "float", &test_float, E_FLOAT, &system_menu, true);
+  add_menu_item(&M_Test_int8, &M_test, "int8", &test_int8, E_INT8, &system_menu, true);
+  add_menu_item(&M_Test_int16, &M_test, "int16", &test_int16, E_INT16, &system_menu, true);
+  add_menu_item(&M_Test_int32, &M_test, "int32", &test_int32, E_INT32, &system_menu, true);
+  add_menu_item(&M_back4, &M_test, "BACK", nullptr, E_RETURN, &system_menu, false);
 
 //draw the latest view
 menu_draw(&system_menu, &lcd);
